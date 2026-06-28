@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>ByVoid · Cyber Monitor</title>
+<meta name="description" content="ByVoid — Futuristic Cyber Monitoring Dashboard">
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<!-- Animate.css -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+<!-- AOS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.css">
+
+<!-- Bootstrap 5 (grid/utilities only, visuals fully overridden) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css">
+
+<!-- Tailwind (utility helpers) -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Custom Style -->
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============ PARTICLE / GRADIENT BACKGROUND ============ -->
+<canvas id="particle-canvas"></canvas>
+<div class="bg-gradient-anim"></div>
+<div class="bg-grid-overlay"></div>
+<div class="scanline"></div>
+
+<!-- ============ PRELOADER ============ -->
+<div id="preloader">
+  <div class="loader-ring">
+    <span></span><span></span><span></span>
+  </div>
+  <p class="loader-text">INITIALIZING<span class="dots">...</span></p>
+</div>
+
+<!-- ============ HEADER ============ -->
+<header class="topbar" data-aos="fade-down" data-aos-duration="900">
+  <div class="topbar-inner">
+    <div class="brand">
+      <span class="brand-logo-wrap">
+        <i class="fa-solid fa-circle-nodes brand-icon"></i>
+      </span>
+      <h1 class="brand-text" data-text="ByVoid">ByVoid</h1>
+    </div>
+
+    <div class="topbar-right">
+      <div class="status-chip">
+        <span class="dot-pulse"></span>
+        <span>SYSTEM ONLINE</span>
+      </div>
+      <button class="icon-btn ripple" id="notifBtn" aria-label="Notifications">
+        <i class="fa-solid fa-bell"></i>
+        <span class="badge-ping"></span>
+      </button>
+      <div class="avatar-ring">
+        <i class="fa-solid fa-user-astronaut"></i>
+      </div>
+    </div>
+  </div>
+  <div class="topbar-glow-line"></div>
+</header>
+
+<!-- ============ MAIN CONTENT ============ -->
+<main id="app">
+
+  <!-- ============ PAGE: HOME ============ -->
+  <section class="page active" id="page-home">
+
+    <!-- Page Title -->
+    <div class="page-head" data-aos="fade-up">
+      <p class="eyebrow"><i class="fa-solid fa-satellite-dish"></i> OVERVIEW</p>
+      <h2 class="page-title">Command <span class="text-neon">Center</span></h2>
+      <p class="page-sub">Real-time visibility across every connected node.</p>
+    </div>
+
+    <!-- Quick Stats -->
+    <div class="stats-grid" data-aos="fade-up" data-aos-delay="100">
+      <div class="stat-card glass hover-lift">
+        <div class="stat-icon i-blue"><i class="fa-solid fa-microchip"></i></div>
+        <div class="stat-info">
+          <span class="stat-value" data-counter="42">0</span>
+          <span class="stat-label">CPU Load %</span>
+        </div>
+        <div class="stat-spark"><svg viewBox="0 0 100 30"><polyline points="0,25 15,20 30,22 45,10 60,15 75,5 90,12 100,8"/></svg></div>
+      </div>
+      <div class="stat-card glass hover-lift">
+        <div class="stat-icon i-purple"><i class="fa-solid fa-memory"></i></div>
+        <div class="stat-info">
+          <span class="stat-value" data-counter="68">0</span>
+          <span class="stat-label">RAM Usage %</span>
+        </div>
+        <div class="stat-spark"><svg viewBox="0 0 100 30"><polyline points="0,10 15,18 30,12 45,20 60,18 75,22 90,15 100,20"/></svg></div>
+      </div>
+      <div class="stat-card glass hover-lift">
+        <div class="stat-icon i-green"><i class="fa-solid fa-wifi"></i></div>
+        <div class="stat-info">
+          <span class="stat-value" data-counter="12">0</span>
+          <span class="stat-label">Devices Online</span>
+        </div>
+        <div class="stat-spark"><svg viewBox="0 0 100 30"><polyline points="0,20 15,15 30,18 45,8 60,12 75,9 90,14 100,6"/></svg></div>
+      </div>
+      <div class="stat-card glass hover-lift">
+        <div class="stat-icon i-red"><i class="fa-solid fa-shield-halved"></i></div>
+        <div class="stat-info">
+          <span class="stat-value" data-counter="99">0</span>
+          <span class="stat-label">Security Score</span>
+        </div>
+        <div class="stat-spark"><svg viewBox="0 0 100 30"><polyline points="0,15 15,12 30,14 45,9 60,11 75,7 90,10 100,5"/></svg></div>
+      </div>
+    </div>
+
+    <!-- VIDEO CARD -->
+    <div class="card-panel glass neon-border" data-aos="zoom-in" data-aos-delay="150" id="videoCard">
+      <div class="panel-head">
+        <h3><i class="fa-solid fa-clapperboard"></i> Video</h3>
+        <span class="panel-tag">LIVE FEED · CAM-01</span>
+      </div>
+
+      <div class="video-wrapper" id="videoWrapper">
+        <video id="mainVideo" poster="https://images.unsplash.com/photo-1535378917042-10a22c95931a?q=80&w=1600&auto=format&fit=crop" preload="metadata">
+          <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.webm" type="video/webm">
+          <source src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" type="video/mp4">
+        </video>
+
+        <div class="video-scan"></div>
+        <div class="video-corner tl"></div>
+        <div class="video-corner tr"></div>
+        <div class="video-corner bl"></div>
+        <div class="video-corner br"></div>
+
+        <button class="video-center-play" id="centerPlay" aria-label="Play video">
+          <i class="fa-solid fa-play"></i>
+        </button>
+
+        <div class="video-controls" id="videoControls">
+          <button class="vc-btn ripple" id="playPauseBtn"><i class="fa-solid fa-play"></i></button>
+
+          <span class="vc-time" id="curTime">00:00</span>
+          <div class="progress-modern" id="progressBar">
+            <div class="progress-buffer"></div>
+            <div class="progress-fill" id="progressFill"></div>
+            <div class="progress-handle" id="progressHandle"></div>
+          </div>
+          <span class="vc-time" id="durTime">00:00</span>
+
+          <div class="vc-volume-wrap">
+            <button class="vc-btn ripple" id="muteBtn"><i class="fa-solid fa-volume-high"></i></button>
+            <input type="range" id="volumeSlider" min="0" max="100" value="80">
+          </div>
+
+          <button class="vc-btn ripple" id="fullscreenBtn"><i class="fa-solid fa-expand"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONNECTED DEVICES -->
+    <div class="card-panel glass" data-aos="fade-up" data-aos-delay="200">
+      <div class="panel-head">
+        <h3><i class="fa-solid fa-tower-broadcast"></i> Connected Devices</h3>
+        <span class="panel-tag" id="deviceCountTag">4 ACTIVE</span>
+      </div>
+      <div class="device-grid" id="deviceGrid"><!-- injected by JS --></div>
+    </div>
+
+  </section>
+
+  <!-- ============ PAGE: DEVICE ============ -->
+  <section class="page" id="page-device">
+    <div class="page-head" data-aos="fade-up">
+      <p class="eyebrow"><i class="fa-solid fa-mobile-screen"></i> NETWORK</p>
+      <h2 class="page-title">Device <span class="text-neon">Registry</span></h2>
+      <p class="page-sub">Search, inspect, and manage every node on your grid.</p>
+    </div>
+
+    <div class="search-bar glass" data-aos="fade-up" data-aos-delay="80">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input type="text" id="deviceSearch" placeholder="Cari device... (nama, status, tipe)">
+      <span class="search-glow"></span>
+    </div>
+
+    <div class="filter-chips" data-aos="fade-up" data-aos-delay="120">
+      <button class="chip active" data-filter="all">Semua</button>
+      <button class="chip" data-filter="online">Online</button>
+      <button class="chip" data-filter="offline">Offline</button>
+      <button class="chip" data-filter="warning">Warning</button>
+    </div>
+
+    <div class="device-grid full" id="deviceGridFull" data-aos="fade-up" data-aos-delay="160"><!-- injected --></div>
+  </section>
+
+  <!-- ============ PAGE: CONTROL ============ -->
+  <section class="page" id="page-control">
+    <div class="page-head" data-aos="fade-up">
+      <p class="eyebrow"><i class="fa-solid fa-sliders"></i> ACTIONS</p>
+      <h2 class="page-title">Control <span class="text-neon">Panel</span></h2>
+      <p class="page-sub">Trigger actions and toggle system modules instantly.</p>
+    </div>
+
+    <div class="control-grid" data-aos="fade-up" data-aos-delay="100">
+
+      <div class="control-card glass hover-lift">
+        <div class="control-icon"><i class="fa-solid fa-power-off"></i></div>
+        <h4>Power Grid</h4>
+        <p>Aktifkan seluruh sistem daya node.</p>
+        <label class="switch">
+          <input type="checkbox" checked>
+          <span class="slider-toggle"></span>
+        </label>
+      </div>
+
+      <div class="control-card glass hover-lift">
+        <div class="control-icon"><i class="fa-solid fa-shield-halved"></i></div>
+        <h4>Firewall</h4>
+        <p>Lindungi jaringan dari intrusi luar.</p>
+        <label class="switch">
+          <input type="checkbox" checked>
+          <span class="slider-toggle"></span>
+        </label>
+      </div>
+
+      <div class="control-card glass hover-lift">
+        <div class="control-icon"><i class="fa-solid fa-moon"></i></div>
+        <h4>Stealth Mode</h4>
+        <p>Sembunyikan node dari pemindaian publik.</p>
+        <label class="switch">
+          <input type="checkbox">
+          <span class="slider-toggle"></span>
+        </label>
+      </div>
+
+      <div class="control-card glass hover-lift">
+        <div class="control-icon"><i class="fa-solid fa-bolt"></i></div>
+        <h4>Turbo Sync</h4>
+        <p>Percepat sinkronisasi antar device.</p>
+        <label class="switch">
+          <input type="checkbox">
+          <span class="slider-toggle"></span>
+        </label>
+      </div>
+
+      <div class="control-card glass hover-lift action-card">
+        <div class="control-icon i-red"><i class="fa-solid fa-rotate-right"></i></div>
+        <h4>Restart All Nodes</h4>
+        <p>Mulai ulang semua device terhubung.</p>
+        <button class="btn-neon ripple">EXECUTE</button>
+      </div>
+
+      <div class="control-card glass hover-lift action-card">
+        <div class="control-icon i-green"><i class="fa-solid fa-download"></i></div>
+        <h4>Pull System Logs</h4>
+        <p>Tarik log realtime dari seluruh grid.</p>
+        <button class="btn-neon ripple">EXECUTE</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ PAGE: MONITOR ============ -->
+  <section class="page" id="page-monitor">
+    <div class="page-head" data-aos="fade-up">
+      <p class="eyebrow"><i class="fa-solid fa-chart-line"></i> TELEMETRY</p>
+      <h2 class="page-title">Live <span class="text-neon">Monitor</span></h2>
+      <p class="page-sub">Grafik realtime untuk performa sistem &amp; perangkat.</p>
+    </div>
+
+    <div class="chart-grid" data-aos="fade-up" data-aos-delay="100">
+      <div class="chart-card glass">
+        <div class="panel-head"><h3><i class="fa-solid fa-microchip"></i> CPU Usage</h3><span class="panel-tag" id="cpuNow">--%</span></div>
+        <canvas id="cpuChart"></canvas>
+      </div>
+      <div class="chart-card glass">
+        <div class="panel-head"><h3><i class="fa-solid fa-memory"></i> RAM Usage</h3><span class="panel-tag" id="ramNow">--%</span></div>
+        <canvas id="ramChart"></canvas>
+      </div>
+      <div class="chart-card glass">
+        <div class="panel-head"><h3><i class="fa-solid fa-network-wired"></i> Network Traffic</h3><span class="panel-tag" id="netNow">-- Mb/s</span></div>
+        <canvas id="netChart"></canvas>
+      </div>
+      <div class="chart-card glass">
+        <div class="panel-head"><h3><i class="fa-solid fa-battery-three-quarters"></i> Battery</h3><span class="panel-tag" id="battNow">--%</span></div>
+        <canvas id="battChart"></canvas>
+      </div>
+    </div>
+
+    <div class="card-panel glass" data-aos="fade-up" data-aos-delay="150">
+      <div class="panel-head"><h3><i class="fa-solid fa-list-check"></i> Device Status</h3></div>
+      <div class="status-table-wrap">
+        <table class="status-table" id="statusTable"><!-- injected --></table>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ BOTTOM NAVIGATION ============ -->
+<nav class="bottom-nav glass" id="bottomNav">
+  <div class="nav-indicator" id="navIndicator"></div>
+  <button class="nav-item active ripple" data-page="home">
+    <i class="fa-solid fa-house"></i>
+    <span>Home</span>
+  </button>
+  <button class="nav-item ripple" data-page="device">
+    <i class="fa-solid fa-mobile-screen-button"></i>
+    <span>Device</span>
+  </button>
+  <button class="nav-item ripple" data-page="control">
+    <i class="fa-solid fa-gamepad"></i>
+    <span>Control</span>
+  </button>
+  <button class="nav-item ripple" data-page="monitor">
+    <i class="fa-solid fa-display"></i>
+    <span>Monitor</span>
+  </button>
+</nav>
+
+<!-- ============ SCRIPTS ============ -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
